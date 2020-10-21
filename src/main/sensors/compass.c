@@ -40,6 +40,7 @@
 #include "drivers/compass/compass_qmc5883l.h"
 #include "drivers/compass/compass_mpu9250.h"
 #include "drivers/compass/compass_lis3mdl.h"
+#include "drivers/compass/compass_mpu925x_ak8963.h"
 #include "drivers/io.h"
 #include "drivers/light_led.h"
 #include "drivers/time.h"
@@ -231,6 +232,17 @@ bool compassDetect(magDev_t *dev, magSensor_e magHardwareToUse)
 #endif
         FALLTHROUGH;
 
+    case MAG_MPU925X_AK8963:
+#ifdef USE_MAG_MPU925X_AK8963
+        if (mpu925Xak8963CompassDetect(dev)) {
+#ifdef MAG_MPU925X_AK8963_ALIGN
+            dev->magAlign.onBoard = MAG_MPU925X_AK8963_ALIGN;
+#endif
+            magHardware = MAG_MPU925X_AK8963;
+            break;
+        }
+#endif
+        FALLTHROUGH;   
     case MAG_LIS3MDL:
 #ifdef USE_MAG_LIS3MDL
         if (lis3mdlDetect(dev)) {
