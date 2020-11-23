@@ -28,6 +28,8 @@
 #ifndef __SYSTEM_STM32F4XX_H
 #define __SYSTEM_STM32F4XX_H
 
+#define HSE_VALUE    24000000U
+
 #ifdef __cplusplus
  extern "C" {
 #endif
